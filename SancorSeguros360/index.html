@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Private Event • A-Frame</title>
+    <meta name="description" content="Private Event • A-Frame" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="./js/aframe-material.js"></script>
+    <script type="text/javascript">
+      AFRAME.ASSETS_PATH = "./assets";
+    </script>
+  </head>
+  <body>
+    <a-scene vr-mode-ui="enabled: false" background="color: #111111">
+      <script>
+        AFRAME.registerComponent("video-handler", {
+          schema: {type: 'string', default: "video"},
+          init: function() {
+            console.log("Hello, World!");
+            let el = this.el;
+            console.info(el.getObject3D('mesh').geometry.vertices);
+            let vid = document.querySelector(this.data);
+            vid.currentTime = 1;
+            vid.volume = 0.5;
+            vid.pause();
+            el.addEventListener("mouseenter", function() {
+              vid.play();
+            });
+            el.addEventListener("mouseleave", function() {
+              vid.pause();
+            });
+          }
+        });
+      </script>
+      <a-assets>
+        <img id="skyHotel" src="MyAssets/CubeSky.jpg" crossorigin="anonymous" />
+        <img
+          id="bannerA"
+          src="MyAssets/BannerA.jpg"
+          crossorigin="anonymous"
+        />
+        <img
+          id="logoSancor"
+          src="MyAssets/LogoSancor.png"
+          crossorigin="anonymous"
+        />
+        <img
+          id="bannerB"
+          src="MyAssets/BannerB.jpg"
+          crossorigin="anonymous"
+        />
+        <a-asset-item
+          id="escenario-obj"
+          src="MyAssets/ESCENARIO.obj"
+        ></a-asset-item>
+        <a-asset-item
+          id="escenario-mtl"
+          src="MyAssets/ESCENARIO.mtl"
+        ></a-asset-item>
+        <video
+          id="andino"
+          volume="0.5"
+          autoplay
+          loop="true"
+          src="MyAssets/Andino.mp4"
+          crossorigin="anonymous"
+        ></video>
+      </a-assets>
+      <a-sky src="#skyHotel" rotation="0 270 0"></a-sky>
+      <a-entity light="type: ambient; color: #aaa"></a-entity>
+      <a-entity
+        light="type: directional; color: #ffD750; intensity: 0.4; castShadow:true;"
+        position="-0.5 1 1"
+      ></a-entity>
+      <a-entity
+        camera
+        look-controls
+        wasd-controls="acceleration:150"
+        cursor="fuse:true;"
+        position="4 1.6 4"
+      >
+        <a-cursor></a-cursor>
+      </a-entity>
+
+      <a-entity 
+        id="ScreenContainerB" 
+        obj-model="obj: #escenario-obj; mtl: #escenario-mtl" 
+        position="0 -60 -300" 
+        scale="0.233 0.233 0.233" 
+        shadow="" 
+        visible="true" 
+        rotation="0 0 0">
+      </a-entity>
+      <!-- <a-video 
+        geometry="primitive:plane" 
+        material="src:#andino" 
+        position="0 72.5 -360" 
+        rotation="-12 0 0" 
+        offset="0.26 0.08" 
+        repeat="0.45 0.85" 
+        width="122" 
+        height="162" 
+        video-handler="#andino">
+      </a-video> -->
+      <a-entity 
+        geometry="primitive:plane" 
+        material="src:#bannerA;shader:flat;" 
+        position="-225 27 -361" 
+        rotation="-10 30 0" 
+        scale="300 130 1" 
+        offset="0 0.08" 
+        repeat="1 0.85">
+      </a-entity>
+      <a-video 
+        geometry="primitive:plane" 
+        material="src:#andino;shader:flat;" 
+        position="0 42.5 -360" 
+        rotation="-12 0 0" 
+        offset="0 0.08" 
+        repeat="1 0.85" 
+        width="288" 
+        height="162" 
+        video-handler="#andino">
+      </a-video>
+      <a-entity 
+        geometry="primitive:plane" 
+        material="src:#bannerB;shader:flat;" 
+        position="225 27 -361" 
+        rotation="-10 330 0" 
+        scale="300 130 1" 
+        offset="0 0.08" 
+        repeat="1 0.85">
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
